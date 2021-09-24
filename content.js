@@ -9,14 +9,13 @@ window.onload = (event) => {
 
     // Create and style a button to use to open a chord sheet.
     let button = document.createElement('button');
-    button.innerText = "Open Chords";
+    button.innerText = 'Open Chords';
     button.style.position = 'absolute';
     button.style.top = '60px';
     button.style.right = '50%';
     button.style.transform = 'translate(50%, 0px)'
     button.style.zIndex = '999';
     
-
     // Add functionality to the buttons on click method.
     button.onclick = (event) => {
 
@@ -28,12 +27,14 @@ window.onload = (event) => {
         let song_title = song_title_div.innerText;
         let artist = document.getElementsByClassName('NowPlayingTopInfo__current__artistName')[0].innerText;
 
-        // Cleanup the song title to remove any featured artists, etc. ex: (feat. artist)
-        song_title = song_title.slice(0, song_title.find('('));
+        // Cleanup the song title to remove any featured artists, etc. ex: (feat. artist).
+        song_title = song_title.slice(0, song_title.indexOf(' ('));
 
-        let search = song_title + " by " + artist;
-
-        chrome.runtime.sendMessage({"message": "open_chords", "url": "https://www.ultimate-guitar.com/search.php?search_type=title&value=" + search});
+        // Create a search string for the song.
+        let search = song_title + ' by ' + artist;
+        
+        // Send chrome the message to open the chords sheet in a new tab.
+        chrome.runtime.sendMessage({'message': 'open_chords', 'url': 'https://www.ultimate-guitar.com/search.php?search_type=title&value=' + search});
     };
 
     document.body.appendChild(button);
