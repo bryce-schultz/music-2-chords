@@ -27,8 +27,11 @@ window.onload = (event) => {
         let song_title = song_title_div.innerText;
         let artist = document.getElementsByClassName('NowPlayingTopInfo__current__artistName')[0].innerText;
 
-        // Cleanup the song title to remove any featured artists, etc. ex: (feat. artist).
-        song_title = song_title.slice(0, song_title.indexOf(' ('));
+        // Cleanup the song title to remove any featured artists if it has one. ex: (feat. artist).
+        if (song_title.includes(' ('))
+        {
+            song_title = song_title.slice(0, song_title.indexOf(' ('));
+        }
 
         // Create a search string for the song.
         let search = song_title + ' by ' + artist;
