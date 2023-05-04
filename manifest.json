@@ -1,16 +1,25 @@
 {
     "manifest_version": 2,
     "name": "Panda-Chords",
-    "version": "1.0",
+    "version": "2.0",
 
     "content_scripts": [
-        {
-            "matches": [
+        {"matches": [
             "https://www.pandora.com/*",
             "http://www.pandora.com/*"
             ],
             "js": [
-                "content.js"
+                "pa_content.js",
+                "common.js"
+            ]
+        }, 
+        {"matches": [
+            "https://music.apple.com/*",
+            "http://music.apple.com/*"
+            ], 
+            "js": [
+                "ap_content.js",
+                "common.js"
             ]
         }
     ],
