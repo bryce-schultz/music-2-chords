@@ -1,4 +1,6 @@
 
+
+
 function createButton()
 {
     let button = document.createElement('button');
@@ -13,6 +15,28 @@ function createButton()
     button.style.borderRadius = '4px';
     button.style.padding = '6px';
     button.style.fontSize = '12px';
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    const handleDarkModeChange = (e) => 
+    {
+        if (e.matches) 
+        {
+            button.style.backgroundColor = '#4D4D4D';
+            button.style.border = '1px solid #2C2C2C';
+        } 
+        else 
+        {
+            button.style.backgroundColor = '#ddd';
+            button.style.border = '1px solid #bbb';
+        }
+    }
+
+    // Initial check
+    handleDarkModeChange(mediaQuery);
+
+    // Listen for changes
+    mediaQuery.addEventListener('change', handleDarkModeChange);
     return button;
 }
 
