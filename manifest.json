@@ -10,7 +10,7 @@
         "48": "assets/icon.png",
         "128": "assets/icon.png"
     },
-    
+
     "background": {
         "service_worker": "background.js"
     },
