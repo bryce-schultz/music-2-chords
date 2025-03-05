@@ -1,34 +1,48 @@
+function getUrl(search) {
+    const chordsUrl = 'https://www.ultimate-guitar.com/search.php?search_type=title&value=';
+    return chordsUrl + search;
+}
 
+/* Example on how to override the default style of the button
+function styleButton(button, isDarkMode) {
+}
+*/
 
+function styleButtonDefault(button, isDarkMode) {
+    button.style.backgroundColor = isDarkMode ? '#4D4D4D' : '#ddd';
+    button.style.border = isDarkMode ? '1px solid #2C2C2C' : '1px solid #bbb';
+    button.style.color = isDarkMode ? '#fff' : '#000';
+    button.style.border = isDarkMode ? '1px solid rgb(31,31,31)' : '1px solid #bbb';
+    button.style.borderRadius = '4px';
+    button.style.padding = '6px';
+    button.style.fontSize = '12px';
+}
 
-function createButton()
-{
+function createButton() {
+    // Create the button and position it on the page
     let button = document.createElement('button');
-    button.innerText = 'Open Chords';
+    button.innerText = 'Chords';
     button.style.position = 'absolute';
     button.style.top = '60px';
     button.style.right = '50%';
     button.style.transform = 'translate(50%, 0px)'
     button.style.zIndex = '999';
-    button.style.backgroundColor = '#ddd';
-    button.style.border = '1px solid #bbb';
-    button.style.borderRadius = '4px';
-    button.style.padding = '6px';
-    button.style.fontSize = '12px';
 
+    // setup the dark mode listener
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleDarkModeChange = (e) => {
+        const isDarkMode = e.matches;
 
-    const handleDarkModeChange = (e) => 
-    {
-        if (e.matches) 
-        {
-            button.style.backgroundColor = '#4D4D4D';
-            button.style.border = '1px solid #2C2C2C';
-        } 
-        else 
-        {
-            button.style.backgroundColor = '#ddd';
-            button.style.border = '1px solid #bbb';
+        // style the button
+        styleButtonDefault(button, isDarkMode);
+
+        // If the styleButton function is defined, call it
+        try {
+            if (styleButton && typeof styleButton === 'function') {
+                styleButton(button, isDarkMode);
+            }
+        } catch (e) {
+            // the styleButton function is not defined, so do nothing
         }
     }
 
@@ -40,23 +54,55 @@ function createButton()
     return button;
 }
 
-function cleanupAndSearch(song_title, artist)
-{
-    if (song_title == undefined || artist == undefined) return;
-    // Cleanup the song title to remove any featured artists if it has one. ex: (feat. artist).
-    if (song_title.includes(' ('))
-    {
-        song_title = song_title.slice(0, song_title.indexOf(' ('));
+function cleanupAndSearch(songTitle, artist) {
+    if (songTitle == undefined || artist == undefined) return;
+
+    if (songTitle.includes('(')) {
+        songTitle = songTitle.slice(0, songTitle.indexOf('('));
     }
 
-    if (artist.includes(' ('))
-    {
-        artist = artist.slice(0, artist.indexOf(' ('));
+    if (artist.includes('(')) {
+        artist = artist.slice(0, artist.indexOf('('));
     }
 
     // Create a search string for the song.
-    let search = song_title + ' by ' + artist;
+    let search = songTitle + ' by ' + artist;
     
     // Send chrome the message to open the chords sheet in a new tab.
-    chrome.runtime.sendMessage({'message': 'open_chords', 'url': 'https://www.ultimate-guitar.com/search.php?search_type=title&value=' + search});
+    chrome.runtime.sendMessage({'message': 'open_chords', 'url': getUrl(search)});
+}
+
+function addButton(button) {
+    document.body.appendChild(button);
+}
+
+window.onload = () => {
+    // Create the button
+    button = createButton();
+    
+    // Setup the on click event for the button
+    button.onclick = () => {
+        let songTitle = '';
+        let artist = '';
+        try {
+            // Get the song title from the page, if the function is defined
+            if (getSongTitle && typeof getSongTitle === 'function') {
+                songTitle = getSongTitle();
+            }
+
+            // Get the artist from the page, if the function is defined
+            if (getArtist && typeof getArtist === 'function') {
+                artist = getArtist();
+            }
+        } catch (e) {
+            // The getSongTitle or getArtist function is not defined, so do nothing
+            return;
+        }
+
+        // If the song title or artist is empty, return.
+        if (songTitle == '' || artist == '') return;
+        cleanupAndSearch(songTitle, artist);
+    };
+
+    addButton(button);
 }

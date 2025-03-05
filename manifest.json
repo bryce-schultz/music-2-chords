@@ -1,36 +1,36 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "Panda-Chords",
     "version": "2.0",
 
+    "action": {
+        "default_icon": "icon.png"
+    },
+
+    "background": {
+        "service_worker": "background.js"
+    },
+
     "content_scripts": [
-        {"matches": [
-            "https://www.pandora.com/*",
-            "http://www.pandora.com/*"
+        {
+            "matches": [
+                "https://www.pandora.com/*",
+                "http://www.pandora.com/*"
             ],
             "js": [
                 "pa_content.js",
                 "common.js"
             ]
-        }, 
-        {"matches": [
-            "https://music.apple.com/*",
-            "http://music.apple.com/*"
-            ], 
+        },
+        {
+            "matches": [
+                "https://music.apple.com/*",
+                "http://music.apple.com/*"
+            ],
             "js": [
                 "ap_content.js",
                 "common.js"
             ]
         }
-    ],
-
-    "browser_action": {
-        "default_icon": "icon.png"
-    },
-
-    "background": {
-        "scripts": [
-            "background.js"
-        ]
-    }
+    ]
 }

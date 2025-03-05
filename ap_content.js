@@ -1,28 +1,20 @@
 /*
 *   Author: Bryce Schultz
 *   File: ap_contents.js
-*   Purpose: acts as the main code for a apple music chrome extension that allows 
+*   Purpose: acts as the main code for a chrome extension that allows 
 *   the user to quickly open a chord sheet for the current song.
 */
 
-window.onload = (event) => {
+function getSongTitle() {
+    let songTitleDiv = document.getElementsByTagName('amp-lcd')[0].shadowRoot.children[1].getElementsByClassName('lcd-meta-line__fragment')[1];
+    if (!songTitleDiv) return;
 
-    // Create and style a button to use to open a chord sheet.
-    button = createButton();
-    
-    // Add functionality to the buttons on click method.
-    button.onclick = (event) => {
+    return songTitleDiv.innerText;
+}
 
-        // Find the song title either in Marquee__wrapper div or Marquee__wrapper__content div depending on the song.
-        let song_title = 
-        document.getElementsByTagName('amp-lcd')[0].shadowRoot.children[1].getElementsByClassName('lcd-meta-line__fragment')[1].innerText;
+function getArtist() {
+    let artistDiv = document.getElementsByTagName('amp-lcd')[0].shadowRoot.children[1].getElementsByClassName('lcd-meta-line__fragment')[2];
+    if (!artistDiv) return;
 
-        // Parse out the song title and artist from the page
-        let artist =
-        document.getElementsByTagName('amp-lcd')[0].shadowRoot.children[1].getElementsByClassName('lcd-meta-line__fragment')[2].innerText;
-
-        cleanupAndSearch(song_title, artist);
-    };
-
-    document.body.appendChild(button);
-};
+    return artistDiv.innerText;
+}
