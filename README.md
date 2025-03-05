@@ -6,7 +6,7 @@ Supported Platforms:
 - Apple Music
 - Pandora
 
-Some songs won't work right as the pages aren't very consistant about class names, and id's.
+Some songs won't work right as the pages aren't very consistant about class names and id's.
 
 Future plans:
 - Better page parsing
