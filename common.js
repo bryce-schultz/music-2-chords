@@ -1,3 +1,10 @@
+/*
+*   Author: Bryce Schultz
+*   File: common.js
+*   Purpose: Handles setting up the button and dark mode listener.
+*/
+
+// Returns the url to search for the chords of the song.
 function getUrl(search) {
     const chordsUrl = 'https://www.ultimate-guitar.com/search.php?search_type=title&value=';
     return chordsUrl + search;
@@ -8,6 +15,7 @@ function styleButton(button, isDarkMode) {
 }
 */
 
+// Provides the default styling for the button
 function styleButtonDefault(button, isDarkMode) {
     button.style.backgroundColor = isDarkMode ? '#4D4D4D' : '#ddd';
     button.style.border = isDarkMode ? '1px solid #2C2C2C' : '1px solid #bbb';
@@ -18,6 +26,7 @@ function styleButtonDefault(button, isDarkMode) {
     button.style.fontSize = '12px';
 }
 
+// Creates the button and sets up the dark mode listener
 function createButton() {
     // Create the button and position it on the page
     let button = document.createElement('button');
@@ -54,6 +63,7 @@ function createButton() {
     return button;
 }
 
+// Cleans up the song title and artist and searches for the chords
 function cleanupAndSearch(songTitle, artist) {
     if (songTitle == undefined || artist == undefined) return;
 
@@ -69,13 +79,15 @@ function cleanupAndSearch(songTitle, artist) {
     let search = songTitle + ' by ' + artist;
     
     // Send chrome the message to open the chords sheet in a new tab.
-    chrome.runtime.sendMessage({'message': 'open_chords', 'url': getUrl(search)});
+    chrome.runtime.sendMessage({ 'message': 'open-chords', 'url': getUrl(search) });
 }
 
+// Adds the button to the page
 function addButton(button) {
     document.body.appendChild(button);
 }
 
+// Setup the extension
 window.onload = () => {
     // Create the button
     button = createButton();
