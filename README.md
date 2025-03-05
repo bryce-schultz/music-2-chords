@@ -1,6 +1,7 @@
 Music2Chords
 
 Adds a button to lookup chords on some platforms.
+
 Supported Platforms:
 - Apple Music
 - Pandora
