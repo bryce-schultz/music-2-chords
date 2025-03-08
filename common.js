@@ -102,7 +102,7 @@ function removeFeaturing(input) {
     // Remove Featuring and everything after it
     input = input.replace(/\s?Featuring.*/, '');
 
-    // Remove ft. and everything after it
+    // Remove ft and everything after it
     input = input.replace(/\s?ft.*/, '');
 
     // Remove everything after the first '('
