@@ -22,10 +22,10 @@ function getArtistMetadataDiv() {
 
 // Parse the song title from the page
 function getSongTitle() {
-    const artistMetadataDiv = getArtistMetadataDiv();
+    const titleMetadataDiv = getTitleMetadataDiv();
 
     const songTitleQuery = 'span.lcd-meta-line__fragment';
-    let songTitleDiv = artistMetadataDiv.querySelector(songTitleQuery);
+    let songTitleDiv = titleMetadataDiv.querySelector(songTitleQuery);
     if (!songTitleDiv) return "";
 
     return songTitleDiv.innerText;
