@@ -4,18 +4,47 @@
 *   Purpose: Provides the functions to get the song title and artist from the current page.
 */
 
+function getMetadataDiv() {
+    const musicPlayer = document.getElementsByTagName('amp-lcd')[0].shadowRoot;
+    const metaData = musicPlayer.querySelector('amp-lcd-metadata .lcd-meta');
+    return metaData;
+}
+
+function getTitleMetadataDiv() {
+    const titleChild = 0;
+    return getMetadataDiv().children[titleChild];
+}
+
+function getArtistMetadataDiv() {
+    const artistChild = 1;
+    return getMetadataDiv().children[artistChild];
+}
+
 // Parse the song title from the page
 function getSongTitle() {
-    let songTitleDiv = document.getElementsByTagName('amp-lcd')[0].shadowRoot.children[1].getElementsByClassName('lcd-meta-line__fragment')[1];
-    if (!songTitleDiv) return;
+    const artistMetadataDiv = getArtistMetadataDiv();
+
+    const songTitleQuery = 'span.lcd-meta-line__fragment';
+    let songTitleDiv = artistMetadataDiv.querySelector(songTitleQuery);
+    if (!songTitleDiv) return "";
 
     return songTitleDiv.innerText;
 }
 
 // Parse the artist from the page
 function getArtist() {
-    let artistDiv = document.getElementsByTagName('amp-lcd')[0].shadowRoot.children[1].getElementsByClassName('lcd-meta-line__fragment')[2];
-    if (!artistDiv) return;
+    const artistMetadataDiv = getArtistMetadataDiv();
+    
+    const artistQuery1 = 'button.lcd-meta-line__fragment';
+    let artistDiv = artistMetadataDiv.querySelector(artistQuery1);
+    if (!artistDiv) 
+    {
+        console.log("Artist not found in query 1");
+        const artistQuery2 = 'span.lcd-meta-line__fragment';
+        artistDiv = artistMetadataDiv.querySelector(artistQuery2);
+    }
+
+    if (!artistDiv) return "";
 
     return artistDiv.innerText;
 }

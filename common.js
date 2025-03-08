@@ -33,8 +33,11 @@ window.onload = () => {
             return;
         }
 
+        console.log('Song Title:', songTitle);
+        console.log('Artist:', artist);
+
         // If the song title or artist is empty, return.
-        if (!songTitle || !artist) {
+        if (songTitle == '' || artist == '') {
             return;
         }
         cleanupAndSearch(songTitle, artist);

@@ -3,7 +3,7 @@
 
     "name": "Music2Chords",
     "description": "Music2Chords is a Chrome extension that helps you learn to play your favorite songs!",
-    "version": "3.2",
+    "version": "3.3",
 
     "icons": {
         "16": "assets/icon.png",
