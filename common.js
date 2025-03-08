@@ -99,11 +99,8 @@ function createButton() {
 
 // Removes featuring from the song title and artist
 function removeFeaturing(input) {
-    // Remove Featuring and everything after it
-    input = input.replace(/\s?Featuring.*/, '');
-
     // Remove ft and everything after it
-    input = input.replace(/\s?ft.*/, '');
+    input = input.replace(/\sft\s.*/, '');
 
     // Remove everything after the first '('
     input = input.replace(/\s?\(.*\)/, '');
