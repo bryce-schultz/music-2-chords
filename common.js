@@ -4,16 +4,50 @@
 *   Purpose: Handles setting up the button and dark mode listener.
 */
 
+/* Example on how to override the default style of the button
+function styleButton(button, isDarkMode) {
+}
+*/
+
+// Setup the extension
+window.onload = () => {
+    // Create the button
+    button = createButton();
+    
+    // Setup the on click event for the button
+    button.onclick = () => {
+        let songTitle = '';
+        let artist = '';
+        try {
+            // Get the song title from the page, if the function is defined
+            if (getSongTitle && typeof getSongTitle === 'function') {
+                songTitle = getSongTitle();
+            }
+
+            // Get the artist from the page, if the function is defined
+            if (getArtist && typeof getArtist === 'function') {
+                artist = getArtist();
+            }
+        } catch (e) {
+            // The getSongTitle or getArtist function is not defined, so do nothing
+            return;
+        }
+
+        // If the song title or artist is empty, return.
+        if (songTitle == '' || artist == '') return;
+        cleanupAndSearch(songTitle, artist);
+    };
+
+    addButton(button);
+}
+
+// ---------------------------------------- Functions ----------------------------------------
+
 // Returns the url to search for the chords of the song.
 function getUrl(search) {
     const chordsUrl = 'https://www.ultimate-guitar.com/search.php?search_type=title&value=';
     return chordsUrl + search;
 }
-
-/* Example on how to override the default style of the button
-function styleButton(button, isDarkMode) {
-}
-*/
 
 // Provides the default styling for the button
 function styleButtonDefault(button, isDarkMode) {
@@ -63,17 +97,29 @@ function createButton() {
     return button;
 }
 
+// Removes featuring from the song title and artist
+function removeFeaturing(input) {
+    // Remove Featuring and everything after it
+    input = input.replace(/\s?Featuring.*/, '');
+
+    // Remove ft. and everything after it
+    input = input.replace(/\s?ft.*/, '');
+
+    // Remove everything after the first '('
+    input = input.replace(/\s?\(.*\)/, '');
+
+    return input;
+}
+
 // Cleans up the song title and artist and searches for the chords
 function cleanupAndSearch(songTitle, artist) {
     if (songTitle == undefined || artist == undefined) return;
 
-    if (songTitle.includes('(')) {
-        songTitle = songTitle.slice(0, songTitle.indexOf('('));
-    }
+    // Remove featuring from the song title
+    songTitle = removeFeaturing(songTitle);
 
-    if (artist.includes('(')) {
-        artist = artist.slice(0, artist.indexOf('('));
-    }
+    // Remove featuring from the artist
+    artist = removeFeaturing(artist);
 
     // Create a search string for the song.
     let search = songTitle + ' by ' + artist;
@@ -85,36 +131,4 @@ function cleanupAndSearch(songTitle, artist) {
 // Adds the button to the page
 function addButton(button) {
     document.body.appendChild(button);
-}
-
-// Setup the extension
-window.onload = () => {
-    // Create the button
-    button = createButton();
-    
-    // Setup the on click event for the button
-    button.onclick = () => {
-        let songTitle = '';
-        let artist = '';
-        try {
-            // Get the song title from the page, if the function is defined
-            if (getSongTitle && typeof getSongTitle === 'function') {
-                songTitle = getSongTitle();
-            }
-
-            // Get the artist from the page, if the function is defined
-            if (getArtist && typeof getArtist === 'function') {
-                artist = getArtist();
-            }
-        } catch (e) {
-            // The getSongTitle or getArtist function is not defined, so do nothing
-            return;
-        }
-
-        // If the song title or artist is empty, return.
-        if (songTitle == '' || artist == '') return;
-        cleanupAndSearch(songTitle, artist);
-    };
-
-    addButton(button);
 }
