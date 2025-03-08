@@ -122,7 +122,7 @@ function cleanupAndSearch(songTitle, artist) {
     artist = removeFeaturing(artist);
 
     // Create a search string for the song.
-    let search = songTitle + ' by ' + artist;
+    let search = songTitle + ' ' + artist;
     
     // Send chrome the message to open the chords sheet in a new tab.
     chrome.runtime.sendMessage({ 'message': 'open-chords', 'url': getUrl(search) });
