@@ -34,7 +34,9 @@ window.onload = () => {
         }
 
         // If the song title or artist is empty, return.
-        if (songTitle == '' || artist == '') return;
+        if (!songTitle || !artist) {
+            return;
+        }
         cleanupAndSearch(songTitle, artist);
     };
 
@@ -60,18 +62,7 @@ function styleButtonDefault(button, isDarkMode) {
     button.style.fontSize = '12px';
 }
 
-// Creates the button and sets up the dark mode listener
-function createButton() {
-    // Create the button and position it on the page
-    let button = document.createElement('button');
-    button.innerText = 'Chords';
-    button.style.position = 'absolute';
-    button.style.top = '60px';
-    button.style.right = '50%';
-    button.style.transform = 'translate(50%, 0px)'
-    button.style.zIndex = '999';
-
-    // setup the dark mode listener
+function setupDarkModeListener(button) {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleDarkModeChange = (e) => {
         const isDarkMode = e.matches;
@@ -94,6 +85,22 @@ function createButton() {
 
     // Listen for changes
     mediaQuery.addEventListener('change', handleDarkModeChange);
+}
+
+// Creates the button and sets up the dark mode listener
+function createButton() {
+    // Create the button and position it on the page
+    let button = document.createElement('button');
+    button.innerText = 'Chords';
+    button.style.position = 'absolute';
+    button.style.top = '60px';
+    button.style.right = '50%';
+    button.style.transform = 'translate(50%, 0px)'
+    button.style.zIndex = '999';
+
+    // Setup the dark mode listener
+    setupDarkModeListener(button);
+
     return button;
 }
 
