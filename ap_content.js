@@ -39,7 +39,6 @@ function getArtist() {
     let artistDiv = artistMetadataDiv.querySelector(artistQuery1);
     if (!artistDiv) 
     {
-        console.log("Artist not found in query 1");
         const artistQuery2 = 'span.lcd-meta-line__fragment';
         artistDiv = artistMetadataDiv.querySelector(artistQuery2);
     }
