@@ -4,11 +4,6 @@
 *   Purpose: Handles setting up the button and dark mode listener.
 */
 
-/* Example on how to override the default style of the button
-function styleButton(button, isDarkMode) {
-}
-*/
-
 // Setup the extension
 window.onload = () => {
     // Create the button
@@ -45,11 +40,6 @@ window.onload = () => {
 
 // ---------------------------------------- Functions ----------------------------------------
 
-// Returns the url to search for the chords of the song.
-function getUrl(search) {
-    return `https://www.ultimate-guitar.com/search.php?search_type=title&value=${search}`;
-}
-
 // Provides the default styling for the button
 function styleButtonDefault(button, isDarkMode) {
     button.style.backgroundColor = isDarkMode ? '#4D4D4D' : '#ddd';
@@ -62,7 +52,7 @@ function styleButtonDefault(button, isDarkMode) {
 }
 
 // Sets up a listener for changes in the dark mode preference
-function setupDarkModeListener(button) {
+function setupStyles(button) {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleDarkModeChange = (e) => {
         const isDarkMode = e.matches;
@@ -100,7 +90,7 @@ function createButton() {
     button.style.cursor = 'pointer';
 
     // Setup the dark mode listener
-    setupDarkModeListener(button);
+    setupStyles(button);
 
     return button;
 }
@@ -117,10 +107,10 @@ function removeFeaturing(input) {
 }
 
 // Opens the chords page in a new tab
-function openChords(url) {
+function openChords(query) {
     // Make the request to the background worker to open the chords page in a new tab. 
     // See background.js for handling this message.
-    chrome.runtime.sendMessage({ 'message': 'open-chords', 'url': url });
+    chrome.runtime.sendMessage({ 'message': 'open-chords', 'query': query });
 }
 
 // Cleans up the song title and artist and searches for the chords
@@ -134,13 +124,10 @@ function cleanupAndSearch(songTitle, artist) {
     artist = removeFeaturing(artist);
 
     // Create a search string for the song.
-    const search = songTitle + ' ' + artist;
-
-    // Get the URL for the chords page based on the search string
-    const url = getUrl(search);
+    const searchQuery = songTitle + ' ' + artist;
 
     // Open the chords page in a new tab
-    openChords(url);
+    openChords(searchQuery);
 }
 
 // Adds the button to the page
