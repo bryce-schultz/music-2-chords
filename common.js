@@ -61,12 +61,13 @@ function styleButtonDefault(button, isDarkMode) {
     button.style.fontSize = '12px';
 }
 
+// Sets up a listener for changes in the dark mode preference
 function setupDarkModeListener(button) {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleDarkModeChange = (e) => {
         const isDarkMode = e.matches;
 
-        // style the button
+        // Style the button
         styleButtonDefault(button, isDarkMode);
 
         // If the styleButton function is defined, call it
@@ -96,6 +97,7 @@ function createButton() {
     button.style.right = '50%';
     button.style.transform = 'translate(50%, 0px)'
     button.style.zIndex = '999';
+    button.style.cursor = 'pointer';
 
     // Setup the dark mode listener
     setupDarkModeListener(button);

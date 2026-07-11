@@ -3,7 +3,7 @@
 
     "name": "Music2Chords",
     "description": "Music2Chords is a Chrome extension that helps you learn to play your favorite songs!",
-    "version": "3.5",
+    "version": "4.0",
 
     "icons": {
         "16": "assets/icon.png",
@@ -22,7 +22,7 @@
                 "http://www.pandora.com/*"
             ],
             "js": [
-                "pa_content.js",
+                "pandora_parser.js",
                 "common.js"
             ]
         },
@@ -32,7 +32,17 @@
                 "http://music.apple.com/*"
             ],
             "js": [
-                "ap_content.js",
+                "apple_parser.js",
+                "common.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://open.spotify.com/*",
+                "http://open.spotify.com/*"
+            ],
+            "js": [
+                "spotify_parser.js",
                 "common.js"
             ]
         }

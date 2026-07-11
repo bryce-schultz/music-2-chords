@@ -1,6 +1,6 @@
 /*
 *   Author: Bryce Schultz
-*   File: ap_contents.js
+*   File: apple_parser.js
 *   Purpose: Provides the functions to get the song title and artist from the current page.
 */
 
@@ -33,5 +33,10 @@ function getArtist() {
 }
 
 function styleButton(button, isDarkMode) {
-    button.style.top = '10px';
+    button.style.backdropFilter = 'saturate(220%) blur(16px)';
+    button.style.backgroundColor = 'rgba(38, 38, 40, .6)';
+    button.style.border = '1px solid hsla(0, 0%, 100%, .15)';
+    button.style.borderRadius = '20px';
+    button.style.boxShadow = '0 10px 40px rgba(38, 38, 40, .6)';
+    button.style.padding = '0.5rem 1rem';
 }
