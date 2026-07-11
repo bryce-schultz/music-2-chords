@@ -24,7 +24,8 @@ window.onload = () => {
                 artist = getArtist();
             }
         } catch (e) {
-            // The getSongTitle or getArtist function is not defined, so do nothing
+            // The getSongTitle or getArtist function is not defined, 
+            // or an error occurred while trying to get the song title or artist.
             return;
         }
 
