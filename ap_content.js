@@ -5,7 +5,8 @@
 */
 
 function getMetadataDiv() {
-    const musicPlayer = document.getElementsByClassName('chrome-player')[0];
+    const musicPlayerIndex = 0;
+    const musicPlayer = document.getElementsByClassName('chrome-player')[musicPlayerIndex];
     return musicPlayer;
 }
 
