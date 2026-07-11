@@ -31,3 +31,7 @@ function getArtist() {
     const artistMetadataDiv = getArtistMetadataDiv();
     return artistMetadataDiv.textContent;
 }
+
+function styleButton(button, isDarkMode) {
+    button.style.top = '10px';
+}

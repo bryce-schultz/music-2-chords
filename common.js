@@ -47,8 +47,7 @@ window.onload = () => {
 
 // Returns the url to search for the chords of the song.
 function getUrl(search) {
-    const chordsUrl = 'https://www.ultimate-guitar.com/search.php?search_type=title&value=';
-    return chordsUrl + search;
+    return `https://www.ultimate-guitar.com/search.php?search_type=title&value=${search}`;
 }
 
 // Provides the default styling for the button
@@ -115,6 +114,13 @@ function removeFeaturing(input) {
     return input;
 }
 
+// Opens the chords page in a new tab
+function openChords(url) {
+    // Make the request to the background worker to open the chords page in a new tab. 
+    // See background.js for handling this message.
+    chrome.runtime.sendMessage({ 'message': 'open-chords', 'url': url });
+}
+
 // Cleans up the song title and artist and searches for the chords
 function cleanupAndSearch(songTitle, artist) {
     if (songTitle == undefined || artist == undefined) return;
@@ -126,10 +132,13 @@ function cleanupAndSearch(songTitle, artist) {
     artist = removeFeaturing(artist);
 
     // Create a search string for the song.
-    let search = songTitle + ' ' + artist;
-    
-    // Send chrome the message to open the chords sheet in a new tab.
-    chrome.runtime.sendMessage({ 'message': 'open-chords', 'url': getUrl(search) });
+    const search = songTitle + ' ' + artist;
+
+    // Get the URL for the chords page based on the search string
+    const url = getUrl(search);
+
+    // Open the chords page in a new tab
+    openChords(url);
 }
 
 // Adds the button to the page
